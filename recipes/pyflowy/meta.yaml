@@ -18,14 +18,30 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ stdlib('c') }}
+    - pkg-config
+    - libnetcdf
+    - cmake
+    - ninja
+    - cpp-argparse
+    - tomlplusplus
+    - catch2
+    - xtensor
+    - xtensor-blas
+    - xtensor-python
+    - requests
+    - hdf5
   host:
     - python
+    - pkg-config
     - pybind11
+    - libnetcdf
+    - hdf5
     - meson-python
     - numpy
     - pip
   run:
     - python
+    - libnetcdf
     - pybind11 >=2.12.0
     - {{ pin_compatible('numpy') }}
 
