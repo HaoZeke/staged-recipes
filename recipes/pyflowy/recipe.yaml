@@ -46,8 +46,8 @@ requirements:
     - pip
     - pkgconfig
     - pybind11
-    - pybind11
     - python
+    - numpy
   run:
     - fmt
     - hdf5
@@ -58,8 +58,10 @@ requirements:
 
 tests:
   - python:
-      imports: pyflowy
-      pip_check: true
+      imports:
+        - pyflowy
+  - script:
+      - pip check
     requirements:
       run:
         - pip
