@@ -1,0 +1,65 @@
+context:
+  name: pydseamslib
+  version: "2.0.0"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/d-SEAMS/seams-core/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 6dc7873665f1c279c7932c8d4e45cf031e816a2dd22924a80c211f14fe61f1f3
+
+build:
+  number: 0
+  script: python -m pip install . -vv --no-build-isolation
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib('c') }}
+    - meson >=1.2.0
+    - ninja
+    - if: build_platform != target_platform
+      then:
+        - cross-python_${{ target_platform }}
+        - numpy
+        - python
+  host:
+    - python
+    - pip
+    - meson-python >=0.16
+    - nanobind >=2.0
+    - numpy
+    - eigen
+    - libblas
+    - liblapack
+  run:
+    - python
+    - numpy >=1.24
+
+tests:
+  - python:
+      imports:
+        - pydseamslib
+        - pydseamslib._core
+      pip_check: true
+
+about:
+  homepage: https://dseams.info
+  summary: Deferred Structural Elucidation Analysis for Molecular Simulations
+  description: |
+    d-SEAMS is a collection of analysis tools for molecular simulations.
+    It can be used to determine the ice and water topological network
+    criteria, analyse quasi-one-dimensional topological features,
+    compute order parameters, and more.
+  license: MIT
+  license_file: LICENSE
+  documentation: https://wiki.dseams.info
+  repository: https://github.com/d-SEAMS/seams-core
+
+extra:
+  recipe-maintainers:
+    - HaoZeke
+    - amritagos
